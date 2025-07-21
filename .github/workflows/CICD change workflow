@@ -31,3 +31,11 @@ jobs:
 
     - name: Run tests
       run: mvn test
+
+    - name: Upload Artifact
+      if: success()  # Only execute if previous steps were successful
+      uses: actions/upload-artifact@v4
+      with:
+        name: petclinic-war
+        path: "/petclinic.war"
+        if-no-files-found: error  # Fail the workflow if no files are found to upload
