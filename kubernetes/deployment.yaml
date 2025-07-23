@@ -21,9 +21,6 @@ spec:
         imagePullPolicy: Always
         name: petclinic
         ports:
-        - containerPort: 3000
+        - containerPort: 8082
           name: http
           protocol: TCP
-        envFrom:
-        - secretRef:
-            name: mongo-db-creds

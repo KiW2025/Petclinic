@@ -15,7 +15,7 @@ spec:
             service:
               name: petclinic
               port:
-                number: 3000
+                number: 8082
           path: /
           pathType: Prefix
     tls:

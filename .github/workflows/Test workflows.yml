@@ -57,3 +57,8 @@ jobs:
         context: .
         push: true                   # disable push during test build
         tags: ${{ vars.DOCKERHUB_USERNAME }}/petclinic:${{ github.sha }}
+
+  # deploy:
+  #   environment: development
+  #   runs-on: ubuntu-latest
+  #   name : deploy
