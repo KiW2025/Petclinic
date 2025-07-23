@@ -1,6 +1,7 @@
-name: PR workflow
+name: CICD change workflow
 
 on:
+  workflow_dispatch:
   push:
     branches: [ cicd-workflows ]
 
