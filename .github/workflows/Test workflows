@@ -1,4 +1,4 @@
-name: CICD change workflow
+name: Test workflows
 
 on:
   workflow_dispatch:
