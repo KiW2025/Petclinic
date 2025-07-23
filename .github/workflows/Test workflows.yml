@@ -3,7 +3,9 @@ name: Test workflows
 on:
   workflow_dispatch:
   push:
-    branches: [ feature/cicd-workflows ]
+    branches:
+      - main
+      - 'feature/*'
 
 jobs:
   build:
