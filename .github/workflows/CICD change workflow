@@ -37,5 +37,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: petclinic-war
-        path: "/home/runner/work/Petclinic/Petclinic/target/petclinic.war"
+        #path: "/home/runner/work/Petclinic/Petclinic/target/petclinic.war"
+        path: ./target/petclinic.war
         if-no-files-found: error  # Fail the workflow if no files are found to upload
