@@ -54,3 +54,5 @@ jobs:
          context: .
          push: true                   # disable push during test build
          tags: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+
+
