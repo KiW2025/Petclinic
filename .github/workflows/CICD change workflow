@@ -3,7 +3,7 @@ name: CICD change workflow
 on:
   workflow_dispatch:
   push:
-    branches: [ cicd-workflows ]
+    branches: [ feature/cicd-workflows ]
 
 jobs:
   build:
