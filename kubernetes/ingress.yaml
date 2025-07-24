@@ -36,7 +36,7 @@ spec:
     ingressClassName: nginx 
     rules:
     #- host: petclinic-dev.${INGRESS_IP}.nip.io
-    - host: petclinic-dev
+    - host: petclinic-dev.com
       http:
         paths:
         - backend:
