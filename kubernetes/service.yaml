@@ -4,7 +4,7 @@ metadata:
   labels:
     app: petclinic
   name: petclinic
-  namespace: ${NAMESPACE}
+  namespace: dev
 spec:
   ports:
   - port: 8082

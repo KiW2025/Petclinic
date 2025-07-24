@@ -1,14 +1,42 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: petclinic
+#   annotations:
+#     # Ingress class to use the NGINX Ingress Controlle
+#     # AWS-specific annotations for SSL and the load balancer
+#     alb.ingress.kubernetes.io/scheme: "internet-facing"
+#     alb.ingress.kubernetes.io/target-type: "ip"
+#     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+#     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:434605749312:certificate/0245c0a5-0867-4372-8206-4a5e4ceda0bd"
+#     alb.ingress.kubernetes.io/ssl-redirect: '443'
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - host: petclinic.dev
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: petclinic
+#                 port:
+#                   number: 8082       
+
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   name: petclinic
-  namespace: ${NAMESPACE}
+  namespace: dev
 spec:
+    ingressClassName: nginx 
     rules:
-    - host: petclinic-${NAMESPACE}.${INGRESS_IP}.nip.io
+    #- host: petclinic-dev.${INGRESS_IP}.nip.io
+    - host: petclinic-dev
       http:
         paths:
         - backend:
@@ -18,7 +46,33 @@ spec:
                 number: 8082
           path: /
           pathType: Prefix
-    tls:
-    - hosts:
-      - petclinic-${NAMESPACE}.${INGRESS_IP}.nip.io
-      secretName: ingress-local-tls
+    # tls:
+    # - hosts:
+    #   - petclinic-dev.${INGRESS_IP}.nip.io
+    #   secretName: ingress-local-tls
+
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#     kubernetes.io/tls-acme: "true"
+#   name: petclinic
+#   namespace: ${NAMESPACE}
+# spec:
+#     rules:
+#     - host: petclinic-${NAMESPACE}.${INGRESS_IP}.nip.io
+#       http:
+#         paths:
+#         - backend:
+#             service:
+#               name: petclinic
+#               port:
+#                 number: 8082
+#           path: /
+#           pathType: Prefix
+#     tls:
+#     - hosts:
+#       - petclinic-${NAMESPACE}.${INGRESS_IP}.nip.io
+#       secretName: ingress-local-tls

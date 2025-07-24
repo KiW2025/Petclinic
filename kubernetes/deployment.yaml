@@ -4,9 +4,9 @@ metadata:
   labels:
     app: petclinic
   name: petclinic
-  namespace: ${NAMESPACE}
+  namespace: dev
 spec:
-  replicas: ${REPLICAS}
+  replicas: 1
   selector:
     matchLabels:
       app: petclinic
@@ -17,10 +17,38 @@ spec:
         app: petclinic
     spec:
       containers:
-      - image: ${K8S_IMAGE}
+      - image: kiwa25/petclinic:ad53945cbd21f2caa97e9a3e266606d226ba8e4f
         imagePullPolicy: Always
         name: petclinic
         ports:
         - containerPort: 8082
           name: http
           protocol: TCP
+
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     app: petclinic
+#   name: petclinic
+#   namespace: ${NAMESPACE}
+# spec:
+#   replicas: ${REPLICAS}
+#   selector:
+#     matchLabels:
+#       app: petclinic
+#   strategy: {}
+#   template:
+#     metadata:
+#       labels:
+#         app: petclinic
+#     spec:
+#       containers:
+#       - image: ${K8S_IMAGE}
+#         imagePullPolicy: Always
+#         name: petclinic
+#         ports:
+#         - containerPort: 8082
+#           name: http
+#           protocol: TCP
