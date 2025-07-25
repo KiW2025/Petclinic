@@ -80,7 +80,7 @@ jobs:
 
     - name: Fetch Kubernetes cluster details
       run: |
-        kubectl version --short
+        kubectl version 
         echo "----------------------------------------------"
         kubectl get nodes
 
