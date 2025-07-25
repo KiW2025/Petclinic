@@ -1,66 +1,66 @@
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     steps:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
 
 
-#     - name: Checkout repository
-#       uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
 
-#     - name: Set Kubeconfig
-#       uses: azure/k8s-set-context@v3
-#       with:
-#         method: kubeconfig
-#         kubeconfig: ${{ secrets.KUBECONFIG }}
+    - name: Set Kubeconfig
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBECONFIG }}
 
 
-#     - name: Fetch Kubernetes cluster details
-#       run: |
-#         kubectl version --short
-#         echo "----------------------------------------------"
-#         kubectl get nodes
+    - name: Fetch Kubernetes cluster details
+      run: |
+        kubectl version --short
+        echo "----------------------------------------------"
+        kubectl get nodes
 
 
-#     - name: Save NGINX Ingress Controller IP
-#       id: save_ingress_ip
-#       run: |
-#         echo "INGRESS_IP=$(kubectl -n ingress-nginx \
-#           get svc ingress-nginx-controller \
-#           -o jsonpath='{.status.loadBalancer.ingress[0].ip}')" >> $GITHUB_ENV
+    - name: Save NGINX Ingress Controller IP
+      id: save_ingress_ip
+      run: |
+        echo "INGRESS_IP=$(kubectl -n ingress-nginx \
+          get svc ingress-nginx-controller \
+          -o jsonpath='{.status.loadBalancer.ingress[0].ip}')" >> $GITHUB_ENV
 
 
-#     - name: Replace tokens in Kubernetes manifests
-#       uses: cschleiden/replace-tokens@v1
-#       with:
-#         tokenPrefix: '{_'
-#         tokenSuffix: '_}'
-#         files: 'kubernetes/development/*.yaml'
-#       env:
-#         NAMESPACE: ${{ vars.NAMESPACE }}
-#         REPLICAS: ${{ vars.REPLICAS }}
-#         IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-#         INGRESS_IP: ${{ env.INGRESS_IP }}
+    - name: Replace tokens in Kubernetes manifests
+      uses: cschleiden/replace-tokens@v1
+      with:
+        tokenPrefix: '{_'
+        tokenSuffix: '_}'
+        files: 'kubernetes/development/*.yaml'
+      env:
+        NAMESPACE: ${{ vars.NAMESPACE }}
+        REPLICAS: ${{ vars.REPLICAS }}
+        IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+        INGRESS_IP: ${{ env.INGRESS_IP }}
 
 
-#     - name: Verify token replacement
-#       run: |
-#         echo "=== deployment.yaml ==="
-#         cat kubernetes/development/deployment.yaml
-#         echo "=== service.yaml ==="
-#         cat kubernetes/development/service.yaml
-#         echo "=== ingress.yaml ==="
-#         cat kubernetes/development/ingress.yaml
-# - name: Create MongoDB secret
-#         run: |
-#           kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \
-#             --from-literal=MONGO_URI=${{ env.MONGO_URI }} \
-#             --from-literal=MONGO_USERNAME=${{ env.MONGO_USERNAME }} \
-#             --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
-#             --save-config \
-#             --dry-run=client \
-#             -o yaml | kubectl apply -f -
+    - name: Verify token replacement
+      run: |
+        echo "=== deployment.yaml ==="
+        cat kubernetes/development/deployment.yaml
+        echo "=== service.yaml ==="
+        cat kubernetes/development/service.yaml
+        echo "=== ingress.yaml ==="
+        cat kubernetes/development/ingress.yaml
+- name: Create MongoDB secret
+        run: |
+          kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \
+            --from-literal=MONGO_URI=${{ env.MONGO_URI }} \
+            --from-literal=MONGO_USERNAME=${{ env.MONGO_USERNAME }} \
+            --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+            --save-config \
+            --dry-run=client \
+            -o yaml | kubectl apply -f -
 
 
-#       - name: Deploy manifests
-#         run: kubectl apply -f kubernetes/development
+      - name: Deploy manifests
+        run: kubectl apply -f kubernetes/development

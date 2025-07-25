@@ -62,3 +62,25 @@ jobs:
   #   environment: development
   #   runs-on: ubuntu-latest
   #   name : deploy
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+
+    - name: Set Kubeconfig
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+
+
+    - name: Fetch Kubernetes cluster details
+      run: |
+        kubectl version --short
+        echo "----------------------------------------------"
+        kubectl get nodes
+
